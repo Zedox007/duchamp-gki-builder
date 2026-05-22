@@ -22,13 +22,13 @@ Droidspaces patches by [ravindu644](https://github.com/ravindu644/Droidspaces-OS
 **Arch:**
 ```bash
 pacman -Syu --noconfirm base-devel git python bc bison flex cpio libelf pahole perl wget curl zip unzip clang lld ccache
-pip install lxml --break-system-packages
+pip install lxml rich --break-system-packages
 ```
 
 **Debian:**
 ```bash
 apt-get update && apt-get install -y git bc bison flex libssl-dev libelf-dev dwarves cpio build-essential clang lld ccache python3-pip
-pip3 install lxml --break-system-packages
+pip3 install lxml rich --break-system-packages
 ```
 
 ---

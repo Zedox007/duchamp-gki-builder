@@ -148,8 +148,8 @@ patch -p1 --fuzz=3 < "$KERNEL_PATCHES/common/unicode_bypass_fix_6.1.patch"
 log "Applying Droidspaces kABI patch"
 patch -p1 --fuzz=3 < "$KERNEL_PATCHES/droidspaces/ds_sysvipc.patch"
 
-#log "Applying BBRv3 patches"
-#patch -p1 --fuzz=3 < $KERNEL_PATCHES/bbrv3/bbrv3.patch
+log "Applying BBRv3 patches"
+patch -p1 --fuzz=3 < $KERNEL_PATCHES/bbrv3/bbrv3.patch
 
 log "BBG included"
 wget -qO- "https://github.com/vc-teahouse/Baseband-guard/raw/main/setup.sh" | bash
