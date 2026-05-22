@@ -22,13 +22,13 @@ Droidspaces patches by [ravindu644](https://github.com/ravindu644/Droidspaces-OS
 **Arch:**
 ```bash
 pacman -Syu --noconfirm base-devel git python bc bison flex cpio libelf pahole perl wget curl zip unzip clang lld ccache
-pip install lxml --break-system-packages
+pip install lxml rich --break-system-packages
 ```
 
 **Debian:**
 ```bash
 apt-get update && apt-get install -y git bc bison flex libssl-dev libelf-dev dwarves cpio build-essential clang lld ccache python3-pip
-pip3 install lxml --break-system-packages
+pip3 install lxml rich --break-system-packages
 ```
 
 ---
@@ -52,10 +52,10 @@ Edit `run_build.sh` to change build options:
 
 | Variable | Values | Description |
 |---|---|---|
-| `KSU` | `KSUN` `KSU` `SKSU` `RSKSU` `no` | Root solution |
-| `KSU_SUSFS` | `true` `false` | SUSFS |
-| `KSU_COMPAT` | `true` `false` | Compat variant |
-| `STATUS` | `BETA` `RELEASE` | Build type |
+| `KSU` | `KSUN` `KSU` `SKSU` `RSKSU` `no` | Root solution (default: `KSUN`) |
+| `KSU_SUSFS` | `true` `false` | SUSFS (default: `false`) |
+| `KSU_COMPAT` | `true` `false` | Compat variant (default: `false`) |
+| `STATUS` | `BETA` `RELEASE` | Build type (default: `BETA`) |
 | `KERNEL_REPO` | any GKI 6.1 repo URL | Kernel source |
 
 ---
