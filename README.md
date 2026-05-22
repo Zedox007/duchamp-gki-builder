@@ -52,10 +52,10 @@ Edit `run_build.sh` to change build options:
 
 | Variable | Values | Description |
 |---|---|---|
-| `KSU` | `KSUN` `KSU` `SKSU` `RSKSU` `no` | Root solution |
-| `KSU_SUSFS` | `true` `false` | SUSFS |
-| `KSU_COMPAT` | `true` `false` | Compat variant |
-| `STATUS` | `BETA` `RELEASE` | Build type |
+| `KSU` | `KSUN` `KSU` `SKSU` `RSKSU` `no` | Root solution (default: `KSUN`) |
+| `KSU_SUSFS` | `true` `false` | SUSFS (default: `false`) |
+| `KSU_COMPAT` | `true` `false` | Compat variant (default: `false`) |
+| `STATUS` | `BETA` `RELEASE` | Build type (default: `BETA`) |
 | `KERNEL_REPO` | any GKI 6.1 repo URL | Kernel source |
 
 ---
