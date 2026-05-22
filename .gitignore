@@ -5,3 +5,5 @@ artifacts/
 susfs/
 KernelSU-Next/
 greenforce-clang/
+*.zip
+artifacts/
