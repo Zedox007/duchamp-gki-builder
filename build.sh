@@ -4,7 +4,7 @@
 WORKDIR="$(pwd)"
 RELEASE_DIR="$WORKDIR/artifacts"
 
-KERNEL_NAME="GKID"
+KERNEL_NAME="dark-ds-kernel"
 USER="ahmed-alnassif"
 HOST="GKI-Duchamp"
 TIMEZONE="Asia/Damascus"
@@ -71,26 +71,18 @@ SUSFS_PATCHES="${SUSFS_DIR}/kernel_patches"
 SUSFS_BRANCH="gki-android14-6.1"
 SUSFS_PATCH="gki-android14-6.1"
 
-log "Changelog of repos"
-gh api "repos/ahmed-alnassif/android_kernel_common-6.1/commits?sha=${KERNEL_BRANCH}&per_page=10" --jq '.[] | "- [" + .sha[0:7] + "](" + .html_url + ") " + (.commit.message | split("\n")[0])'\
-> "$RELEASE_DIR/android_kernel-6.1_changelog.txt"
-gh api 'repos/tiann/KernelSU/commits?sha=main&per_page=10' --jq '.[] | "- [" + .sha[0:7] + "](" + .html_url + ") " + (.commit.message | split("\n")[0])'\
-> "$RELEASE_DIR/ksu_changelog.txt"
-gh api 'repos/SukiSU-Ultra/SukiSU-Ultra/commits?sha=builtin&per_page=10' --jq '.[] | "- [" + .sha[0:7] + "](" + .html_url + ") " + (.commit.message | split("\n")[0])'\
-> "$RELEASE_DIR/sukisu_changelog.txt"
-gh api 'repos/pershoot/KernelSU-Next/commits?sha=dev-susfs&per_page=10' --jq '.[] | "- [" + .sha[0:7] + "](" + .html_url + ") " + (.commit.message | split("\n")[0])'\
-> "$RELEASE_DIR/ksun_changelog.txt"
+#log "Changelog of repos"
+#gh api "repos/ahmed-alnassif/android_kernel_common-6.1/commits?sha=${KERNEL_BRANCH}&per_page=10" --jq '.[] | "- [" + .sha[0:7] + "](" + .html_url + ") " + (.commit.message | split("\n")[0])'\
+#> "$RELEASE_DIR/android_kernel-6.1_changelog.txt"
+#gh api 'repos/tiann/KernelSU/commits?sha=main&per_page=10' --jq '.[] | "- [" + .sha[0:7] + "](" + .html_url + ") " + (.commit.message | split("\n")[0])'\
+#> "$RELEASE_DIR/ksu_changelog.txt"
+#gh api 'repos/SukiSU-Ultra/SukiSU-Ultra/commits?sha=builtin&per_page=10' --jq '.[] | "- [" + .sha[0:7] + "](" + .html_url + ") " + (.commit.message | split("\n")[0])'\
+#> "$RELEASE_DIR/sukisu_changelog.txt"
+#gh api 'repos/pershoot/KernelSU-Next/commits?sha=dev-susfs&per_page=10' --jq '.[] | "- [" + .sha[0:7] + "](" + .html_url + ") " + (.commit.message | split("\n")[0])'\
+#> "$RELEASE_DIR/ksun_changelog.txt"
 
 # Download Clang
-log "Downloading Clang..."
-CLANG_BIN="$WORKDIR/greenforce-clang/bin"
-wget -qO- "https://raw.githubusercontent.com/greenforce-project/greenforce_clang/refs/heads/main/get_clang.sh" | bash &> /dev/null
-if [ ! -d "$CLANG_BIN" ]; then
-    echo "Error: Clang not found in ${CLANG_BIN}."
-    exit 1
-fi
-
-export PATH="${CLANG_BIN}:$PATH"
+log "Using system Clang..."
 
 # ccache configuration
 export CCACHE_DIR="$HOME/.ccache"
@@ -153,8 +145,11 @@ patch -p1 --fuzz=3 < "$KERNEL_PATCHES/common/use_unlikely_wrap_cpufreq.patch"
 log "Applying unicode_bypass_fix_6.1.patch"
 patch -p1 --fuzz=3 < "$KERNEL_PATCHES/common/unicode_bypass_fix_6.1.patch"
 
-log "Applying BBRv3 patches"
-patch -p1 --fuzz=3 < $KERNEL_PATCHES/bbrv3/bbrv3.patch
+log "Applying Droidspaces kABI patch"
+patch -p1 --fuzz=3 < "$KERNEL_PATCHES/droidspaces/ds_sysvipc.patch"
+
+#log "Applying BBRv3 patches"
+#patch -p1 --fuzz=3 < $KERNEL_PATCHES/bbrv3/bbrv3.patch
 
 log "BBG included"
 wget -qO- "https://github.com/vc-teahouse/Baseband-guard/raw/main/setup.sh" | bash
@@ -304,8 +299,6 @@ MAKE_ARGS=(
   LLVM=1
   LLVM_IAS=1
   ARCH=arm64
-  CROSS_COMPILE=aarch64-linux-gnu-
-  CROSS_COMPILE_COMPAT=arm-linux-gnueabi-
   -j$(nproc --all)
   O=$OUTDIR
 )

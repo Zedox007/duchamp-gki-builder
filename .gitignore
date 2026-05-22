@@ -1,0 +1,7 @@
+ksrc/
+anykernel/
+out/
+artifacts/
+susfs/
+KernelSU-Next/
+greenforce-clang/
